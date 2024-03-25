@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo, useState } from "react";
+import { FC, useMemo } from "react";
 import styles from "./Pagination.module.css"
 import useIsVisible from "../../hooks/useIsVisible";
 import Button from "../../ui/Button/Button";
@@ -8,14 +8,15 @@ interface IPagination {
     name: string
     children: React.ReactNode;
     onLoad?: () => void
+    portionsNumber: number
+    setPortionsNumber: (val: number) => void
 }
 
-const Pagination: FC<IPagination> = ({children, name, onLoad}) => {
+const Pagination: FC<IPagination> = ({children, name, onLoad, portionsNumber, setPortionsNumber}) => {
     const borderId = useMemo(() => {
         return `pagination-${name}-border`
     }, [name])
 
-    const [timesCalled, setTimesCalled] = useState(0)
     const onShow = useMemo(() => {
         if (!onLoad) {
             return undefined
@@ -23,9 +24,9 @@ const Pagination: FC<IPagination> = ({children, name, onLoad}) => {
 
         return () => {
             onLoad()
-            setTimesCalled(timesCalled+1)
+            setPortionsNumber(portionsNumber+1)
         }
-    }, [timesCalled, onLoad])
+    }, [portionsNumber, onLoad])
 
     useIsVisible(
         borderId,
@@ -35,7 +36,7 @@ const Pagination: FC<IPagination> = ({children, name, onLoad}) => {
     return (
         <>
             {children}
-            {timesCalled >= 5 
+            {portionsNumber >= 5 
                 ? <Button onClick={() => {onLoad?.()}}>Загрузить еще</Button>
                 : <div className={styles.border} id={borderId}/>
             }

@@ -19,6 +19,13 @@ const PostListPage = () => {
     const [portionsNumber, setPortionsNumber] = useState(0)
 
     useEffect(() => {
+        (async () => {
+            const posts = await getPosts()
+            setAllPosts(posts)
+        })()
+    }, [])
+
+    useEffect(() => {
         if (!location.search) {
             navigate(`${location.pathname}?count=${1}`)
             return;
@@ -29,11 +36,9 @@ const PostListPage = () => {
             const numberOfPosts = parseInt(count) * POSTS_BATCH_SIZE
             setPortionsNumber(parseInt(count))
 
-            const posts = await getPosts()
-            setAllPosts(posts)
-            setVisiblePosts(posts.slice(0, numberOfPosts))
+            setVisiblePosts(allPosts.slice(0, numberOfPosts))
         })()
-    }, [location])
+    }, [location, allPosts])
 
     const onLoad = useMemo(() => {
         if (allPosts.length) {

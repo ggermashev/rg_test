@@ -5,30 +5,31 @@ export default function useIsVisible(id: string, onShow?: () => void, onHide?: (
     const [lastCalled, setLastCalled] = useState(0)
 
     useEffect(() => {
-        if (id) {     
-            let options = {
-                threshold,
-            };
-        
-            let observer = new IntersectionObserver(entry => {
-                if (entry[0].isIntersecting) {
-                    if (onShow && Date.now() - lastCalled > 100) {
-                       onShow() 
-                       setLastCalled(Date.now())
-                    }
-                } else if (onHide){
-                    onHide()
-                }
-            }, options);
-            
-            const el = (document.getElementById(id))
-            if (el) {
-                observer.observe(document.getElementById(id) as Element)
-            }
+        if (!id) { return }
 
-            return () => {
-                observer.disconnect()
+        const options = {threshold}
+
+        const observer = new IntersectionObserver(entry => {
+            if (entry[0].isIntersecting) {
+                if (!onShow) { return }
+
+                if (Date.now() - lastCalled > 100) {
+                    onShow() 
+                    setLastCalled(Date.now())
+                }
+            } else {
+                onHide?.()
             }
+        }, options);
+        
+        const element = document.getElementById(id)
+        if (!element) { return }
+
+        observer.observe(element)
+        
+        return () => {
+            observer.disconnect()
         }
+        
     }, [id, onShow, onHide, threshold])
 }

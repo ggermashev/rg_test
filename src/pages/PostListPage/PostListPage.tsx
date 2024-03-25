@@ -19,25 +19,23 @@ const PostListPage = () => {
     const [portionsNumber, setPortionsNumber] = useState(0)
 
     useEffect(() => {
-        //При первом переходе устанавливаем число постов
         if (!location.search) {
             navigate(`${location.pathname}?count=${1}`)
             return;
         } 
 
-        //При изменении числа постов подгружаем их
         (async () => {
             const {count} = parseSearchParams(location.search)
             const numberOfPosts = parseInt(count) * POSTS_BATCH_SIZE
+            setPortionsNumber(parseInt(count))
+
             const posts = await getPosts()
             setAllPosts(posts)
             setVisiblePosts(posts.slice(0, numberOfPosts))
-            setPortionsNumber(parseInt(count))
         })()
     }, [location])
 
     const onLoad = useMemo(() => {
-        //Переходим на страницу с новым числом постов
         if (allPosts.length) {
             return () => {
                 const {count} = parseSearchParams(location.search)
@@ -64,7 +62,6 @@ const PostListPage = () => {
                     <Post key={id} id={id} userId={userId} title={title} body={body}/>
                 )}
             </Pagination>
-            
         </div>
     )
 }

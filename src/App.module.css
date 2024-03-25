@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --grey: #d0d0d0;
+    --white: #ffffff;
+    --dark: #111111;
+}
+
+.App {
+    position: relative;
+    width: 100%;
+}
+
+main {
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--grey);
+}

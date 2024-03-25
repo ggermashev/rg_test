@@ -1,0 +1,8 @@
+.btn {
+    padding: 8px;
+    background-color: var(--white);
+}
+
+.btn:hover {
+    cursor: pointer;
+}

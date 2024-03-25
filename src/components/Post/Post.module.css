@@ -1,0 +1,31 @@
+.post {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    padding: 8px;
+    background-color: var(--white);
+}
+
+.post:hover {
+    cursor: pointer;
+    box-shadow: 0 0 4px var(--dark);
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    margin-bottom: 8px;
+}
+
+.title {
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+}
+
+.author {
+    text-wrap: nowrap;
+}

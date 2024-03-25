@@ -1,0 +1,10 @@
+.page {
+    position: relative;
+    width: 100%;
+    padding: 16px;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+}
